@@ -126,6 +126,16 @@ public class PictureTester
     seagull.explore();
   }
   
+  /** Method to test cropAndCopy */
+  public static void testCropAndCopy()
+  {
+      Picture katie = new Picture("KatieFancy.jpg");
+      Picture beach = new Picture("beach.jpg");
+      beach.explore();
+      beach.cropAndCopy(katie, 25, 77, 85, 124, 97, 236);
+      beach.explore();
+  }
+    
   /** Method to test the collage method */
   public static void testCollage()
   {
@@ -168,7 +178,7 @@ public class PictureTester
     testMirrorArms();
     testMirrorGull();
     //testCollage();
-    //testCopy();
+    testCropAndCopy();
     //testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();
