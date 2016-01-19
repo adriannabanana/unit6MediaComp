@@ -407,17 +407,18 @@ public class Picture extends SimplePicture
     /** Method to create a collage of several pictures */
     public void createCollage()
     {
-        Picture flower1 = new Picture("flower1.jpg");
-        Picture flower2 = new Picture("flower2.jpg");
-        this.copy(flower1,0,0);
-        this.copy(flower2,100,0);
-        this.copy(flower1,200,0);
-        Picture flowerNoBlue = new Picture(flower2);
-        flowerNoBlue.zeroBlue();
-        this.copy(flowerNoBlue,300,0);
-        this.copy(flower1,400,0);
-        this.copy(flower2,500,0);
-        this.mirrorVertical();
+        Picture forest = new Picture("forest2.jpg");
+        this.copy(forest,0,0);
+        Picture forestNoBlue = new Picture(forest);
+        forestNoBlue.zeroBlue();
+        this.copy(forestNoBlue,0,500);
+// 
+//         Picture forestNoBlue = new Picture(forest2);
+//         forestNoBlue.zeroBlue();
+//         this.copy(forestNoBlue,300,0);
+//         this.copy(forest,400,0);
+//         this.copy(forest2,500,0);
+//         this.mirrorVertical();
         this.write("collage.jpg");
     }
 
@@ -452,6 +453,17 @@ public class Picture extends SimplePicture
      */
     public Picture scaleByHalf()
     {
+        Pixel[][] pixels = this.getPixels2D();
+        int height = pixels.length;
+        int width = pixels[0].length;
+        int newHeight = height/2;
+        int newWidth = width/2;
+        Picture scaled = new Picture(newHeight,newWidth);
+        
+        return scaled;
+        
+        
+
         
     }
 

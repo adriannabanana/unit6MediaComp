@@ -139,7 +139,7 @@ public class PictureTester
   /** Method to test the collage method */
   public static void testCollage()
   {
-    Picture canvas = new Picture("640x480.jpg");
+    Picture canvas = new Picture("1000x1000.jpg");
     canvas.createCollage();
     canvas.explore();
   }
@@ -152,6 +152,14 @@ public class PictureTester
     swan.explore();
   }
   
+  /** Method to test scaleByHalf */
+  public static void testScaleByHalf()
+  {
+      Picture forest = new Picture("forest.jpg");
+      forest.scaleByHalf();
+      forest.explore();
+  }
+    
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -177,8 +185,9 @@ public class PictureTester
     testMirrorTemple();
     testMirrorArms();
     testMirrorGull();
-    //testCollage();
+    testCollage();
     testCropAndCopy();
+    testScaleByHalf();
     //testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();
