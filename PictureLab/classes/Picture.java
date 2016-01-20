@@ -97,6 +97,19 @@ public class Picture extends SimplePicture
             }
         }
     }
+    
+    /** Method to set the green to 0 */
+    public void zeroGreen()
+    {
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels)
+        {
+            for (Pixel pixelObj : rowArray)
+            {
+                pixelObj.setGreen(0);
+            }
+        }
+    }
 
     /** Method to set red and green to 0 */
     public void keepOnlyBlue()
@@ -140,6 +153,106 @@ public class Picture extends SimplePicture
                 pixelObj.setRed(avg);
                 pixelObj.setGreen(avg);
                 pixelObj.setBlue(avg);
+            }
+        }
+    }
+    
+    /** Method to use a sepia filter */
+    public void sepia()
+    {
+        Pixel[][] pixels = this.getPixels2D();
+        int avg = 0;
+        int originalRed = 0;
+        int originalBlue = 0;
+        int originalGreen = 0;
+        
+        for (Pixel[] rowArray : pixels)
+        {
+            for (Pixel pixelObj : rowArray)
+            {
+                originalRed = pixelObj.getRed();
+                originalBlue = pixelObj.getBlue();
+                originalGreen = pixelObj.getGreen();
+                avg = (pixelObj.getRed()+pixelObj.getGreen()+pixelObj.getBlue())/3;
+                pixelObj.setRed(avg);
+                pixelObj.setGreen(avg);
+                pixelObj.setBlue(avg);
+                if (pixelObj.getRed() < 60)
+                {
+                    pixelObj.setRed((int)(originalRed*.9));
+                    pixelObj.setBlue((int)(originalBlue*.9));
+                    pixelObj.setGreen((int)(originalGreen*.9));
+                }
+                else if (pixelObj.getRed() < 190)
+                {
+                    pixelObj.setBlue((int)(originalRed*.8));
+                }
+                else
+                {
+                    pixelObj.setBlue((int)(originalRed*.9));
+                }
+            }
+        }
+    }
+    
+    /** Method to posterize a picture */
+    public void posterize()
+    {
+        Pixel[][] pixels = this.getPixels2D();
+        for (Pixel[] rowArray : pixels)
+        {
+            for (Pixel pixelObj : rowArray)
+            {
+                if (pixelObj.getRed() < 64)
+                {
+                    pixelObj.setRed(32);
+                }
+                else if (pixelObj.getRed() < 128)
+                {
+                    pixelObj.setRed(96);
+                }
+                else if (pixelObj.getRed() < 192)
+                {
+                    pixelObj.setRed(160);
+                }
+                else
+                {
+                    pixelObj.setRed(224);
+                }
+                
+                if (pixelObj.getBlue() < 64)
+                {
+                    pixelObj.setBlue(32);
+                }
+                else if (pixelObj.getBlue() < 128)
+                {
+                    pixelObj.setBlue(96);
+                }
+                else if (pixelObj.getBlue() < 192)
+                {
+                    pixelObj.setBlue(160);
+                }
+                else
+                {
+                    pixelObj.setBlue(224);
+                }
+                
+                if (pixelObj.getGreen() < 64)
+                {
+                    pixelObj.setGreen(32);
+                }
+                else if (pixelObj.getGreen() < 128)
+                {
+                    pixelObj.setGreen(96);
+                }
+                else if (pixelObj.getGreen() < 192)
+                {
+                    pixelObj.setGreen(160);
+                }
+                else
+                {
+                    pixelObj.setGreen(224);
+                }
             }
         }
     }
@@ -409,16 +522,26 @@ public class Picture extends SimplePicture
     {
         Picture forest = new Picture("forest2.jpg");
         this.copy(forest,0,0);
-        Picture forestNoBlue = new Picture(forest);
-        forestNoBlue.zeroBlue();
-        this.copy(forestNoBlue,0,500);
-// 
-//         Picture forestNoBlue = new Picture(forest2);
-//         forestNoBlue.zeroBlue();
-//         this.copy(forestNoBlue,300,0);
-//         this.copy(forest,400,0);
-//         this.copy(forest2,500,0);
-//         this.mirrorVertical();
+        
+        Picture posterizedForest = new Picture(forest);
+        posterizedForest.posterize();
+        posterizedForest.mirrorVertical();
+        this.copy(posterizedForest,332,500);
+        
+        Picture grayForest = new Picture(forest);
+        grayForest.grayscale();
+        grayForest.mirrorDiagonal();
+        this.copy(grayForest,0,500);
+        
+        Picture sepiaForest = new Picture(forest);
+        sepiaForest.sepia();
+        sepiaForest.mirrorHorizontal();
+        this.copy(sepiaForest,332,0);
+        
+        Picture noGreen = new Picture(forest);
+        noGreen.zeroGreen();
+        this.copy(noGreen,663,0);
+        
         this.write("collage.jpg");
     }
 

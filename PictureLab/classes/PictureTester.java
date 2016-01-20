@@ -44,6 +44,15 @@ public class PictureTester
     beach.explore();
   }
   
+  /** Method to test sepia */
+  public static void testSepia()
+  {
+    Picture beach = new Picture("beach.jpg");
+    beach.explore();
+    beach.sepia();
+    beach.explore();
+  }
+  
   /** Method to test fixUnderwater */
   public static void testFixUnderwater()
   {
@@ -176,6 +185,7 @@ public class PictureTester
     //testKeepOnlyGreen();
     testNegate();
     testGrayscale();
+    testSepia();
     testFixUnderwater();
     testMirrorVertical();
     testMirrorVerticalRightToLeft();
