@@ -542,7 +542,12 @@ public class Picture extends SimplePicture
         noGreen.zeroGreen();
         this.copy(noGreen,663,0);
         
-        this.write("collage.jpg");
+        Picture negativeForest = new Picture(forest);
+        negativeForest.negate();
+        negativeForest.mirrorVerticalRightToLeft();
+        this.copy(negativeForest,663,500);
+        
+        this.write("forest collage.jpg");
     }
 
     /** Method to show large changes in color 
@@ -571,10 +576,8 @@ public class Picture extends SimplePicture
         }
     }
     
-    /** scales a picture by 50% (width and height will halved)
-     * 
-     */
-    public Picture scaleByHalf()
+    /** scales a picture by 50% (width and height will halved)*/
+    public Pixel[][] scaleByHalf()
     {
         Pixel[][] pixels = this.getPixels2D();
         int height = pixels.length;
@@ -582,17 +585,20 @@ public class Picture extends SimplePicture
         int newHeight = height/2;
         int newWidth = width/2;
         Picture scaled = new Picture(newHeight,newWidth);
+        Pixel[][] scaledPic = scaled.getPixels2D();
+        for (int i = 0; i < height; i+=2)
+        {
+            for (int j = 0; j < width; j+=2)
+            {
+                scaledPic[i/2][j/2] = pixels[i][j];
+            }
+        }
         
-        return scaled;
-        
-        
+        return scaledPic;
 
-        
     }
 
-    /* Main method for testing - each class in Java can have a main 
-     * method 
-     */
+    /** Main method for testing - each class in Java can have a main method */
     public static void main(String[] args) 
     {
         Picture beach = new Picture("beach.jpg");
